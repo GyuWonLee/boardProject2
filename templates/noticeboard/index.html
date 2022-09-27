@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>글목록</title>
+    <style>
+    @font-face {
+        font-family: 'LeeSeoyun';
+        src:
+            url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff')
+            format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        font-family: 'LeeSeoyun';
+    }
+
+    .cls1 {
+        text-decoration: none;
+    }
+
+    .cls2 {
+        text-align: center;
+        font-size: 30px;
+        display: block;
+    }
+
+    a:hover {
+        color: #153acf;
+    }
+
+    button:hover{
+        background-color: #c0d9fc;
+    }
+
+    h1{
+      position: relative;
+      animation: mymove infinite;
+      animation-duration: 3s;
+      color: blue;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes mymove {
+      from {top: 0px;}
+      to {top: 30px; color: #c0d9fc;}
+    }
+
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 25px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 3px #c0d9fc;
+        border-radius: 5px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #c0d9fc;;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+<body>
+	<h1 style="text-align: center; color: blue;">글 목록</h1>
+	<br><br>
+	<center>
+	 {% if user.is_authenticated  %}
+        <button><a class="rm_underline" href="{% url 'common:logout' %}">
+        <span>{{ user.username }} (logout)</span>
+		</a></button>
+    {% else %}
+        <button><a class="rm_underline" href="{% url 'common:login' %}">
+        <span>login</span>
+		</a></button>
+		{% endif %}</center>
+	<br><br>
+	<table align="center" border="1" width="80%">
+		<thead>
+			<tr height="10" align="center" bgcolor="#c0d9fc">
+				<th>글번호</th>
+				<th>작성자</th>
+				<th>제목</th>
+				<th>작성일</th>
+			</tr>
+		<thead />
+	    {% if not article_list %}
+            <tbody>
+            <tr height="10">
+                <td colspan="4">
+                    <p align="center">
+                        <b><span style="font-size: 9pt;">등록된 글이 없습니다.</span></b>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        {% else %}
+            <tbody>
+                {% for article in article_list %}
+                    <tr align="center">
+					    <td width="5%">{{forloop.counter}}</td>
+                        <td width="10%">{{article.writeId}}</td>
+                        <td align="left" width="35%"><span
+						style="padding-right: 30px"></span>
+						<a class="cls1" href="{% url 'noticeboard:view' article.id %}">
+						{{article.title}}
+						</a>
+						</td>
+						<td width="10%">{{article.writeDate}}</td>
+                    </tr>
+                {% endfor %}
+				</tbody>
+			{% endif %}
+	</table>
+	<a class="cls1" href="{% url 'noticeboard:write_article' %}">
+	<br><br>
+        <center>
+			<button>
+				<span class="clas2">글쓰기</span>
+            </button>
+
+		</center>
+</body>
+</html>

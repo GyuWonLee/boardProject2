@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form_error</title>
+      <style>
+    @font-face {
+        font-family: 'LeeSeoyun';
+        src:
+            url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff')
+            format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        font-family: 'LeeSeoyun';
+    }
+
+    .cls1 {
+        text-decoration: none;
+    }
+
+    .cls2 {
+        text-align: center;
+        font-size: 30px;
+        display: block;
+    }
+
+    a:hover {
+        color: #153acf;
+    }
+
+    button:hover{
+        background-color: #c0d9fc;
+    }
+
+    h1{
+      position: relative;
+      animation: mymove infinite;
+      animation-duration: 3s;
+      color: blue;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes mymove {
+      from {top: 0px;}
+      to {top: 30px; color: #c0d9fc;}
+    }
+
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 25px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 3px #c0d9fc;
+        border-radius: 5px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #c0d9fc;;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+<body>
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        {% for field in form %}
+        <!-- 필드 오류 -->
+            {% if field.errors %}
+                <div>
+                    <strong>{{ field.label }}</strong>
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <!-- 넌필드 오류 -->
+        {% for error in form.non_field_errors %}
+            <div>
+                <strong>{{ error }}</strong>
+            </div>
+        {% endfor %}
+    </div>
+  {% endif %}
+</body>
+</html>
